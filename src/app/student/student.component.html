@@ -1,0 +1,168 @@
+ 
+<div class="col-12"  *ngIf="isAdmin">
+  <div class="card recent-sales overflow-auto">
+
+    <!-- <div class="filter">
+      <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+        <li class="dropdown-header text-start">
+          <h6>Filter</h6>
+        </li>
+
+        <li><a class="dropdown-item" href="#">Today</a></li>
+        <li><a class="dropdown-item" href="#">This Month</a></li>
+        <li><a class="dropdown-item" href="#">This Year</a></li>
+      </ul>
+    </div> -->
+
+    <div class="card-body">
+      <h5 class="card-title">Student page</h5>
+
+      <table class="table table-borderless datatable">
+        <thead>
+          <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Name</th>
+            <th scope="col">StudentID</th>
+            <th scope="col">Email</th>
+            <th scope="col">Course Name</th>
+            <th scope="col">Location</th>
+            <th scope="col">ContactNo</th>
+            <th scope="col">Status</th>
+            <th scope="col">Resume</th>
+            <th scope="col">change Status</th>
+            <th scope="col">Reason Of Rejection</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let student of students">
+            <td>{{student.createdDate | date:'dd-MM-yy'}}</td>
+            <td>{{ student.name }}</td>
+            <td>{{ student.studnetID }}</td>
+            <td>{{ student.email }}</td>
+            <td>{{ student.courseName }}</td>
+            <td>{{ student.location }}</td>
+            <td>{{ student.contactNo }}</td>
+            <td>
+              <span *ngIf="student.status === 'Placed'" class="badge bg-success">Placed</span>
+              <span *ngIf="student.status === 'Jobseeker'" class="badge bg-warning">Jobseeker</span>
+            </td>
+            <td>
+              <a *ngIf="student.cvAttachment" (click)="downloadFile(generateDownloadLink(student))" style="cursor: pointer; color: blue;">Download CV</a>
+              <span *ngIf="!student.cvAttachment">N/A</span>
+            </td>
+            <td>
+              <div class="form-check form-switch">
+                <input
+                  mdbCheckbox
+                  style="cursor: pointer;"
+                  class="form-check-input"
+                  type="checkbox"
+                  id="flexSwitchCheckChecked"
+                  [checked]="student.status === 'Placed'"
+                  (change)="onToggleChange(student)"
+                />
+                <label class="form-check-label" for="flexSwitchCheckChecked"></label>
+              </div>
+            </td>
+            <td *ngIf="student.hiredStatus == 'Rejected' && student.hiredStatus !== 'Hired' && student.hiredStatus !== 'Relevant' ">
+              <span *ngIf="!student.reasonofRejection">N/A</span>
+              <span *ngIf="student.reasonofRejection">{{ student.reasonofRejection }}</span>
+            </td>
+          </tr>
+        </tbody>.
+      </table>
+      <!-- <div class="text-center">
+        <button class="btn btn-primary" (click)="prevPage()" [disabled]="page === 1">Previous</button>
+        <span>Page {{ page }}</span>
+        <button class="btn btn-primary" (click)="nextPage()" [disabled]="page * limit >= totalStudents">Next</button>
+      </div> -->
+    </div>
+
+  </div>
+</div>
+
+<div class="col-12"  *ngIf="!isAdmin">
+  <div class="card recent-sales overflow-auto">
+
+    <!-- <div class="filter">
+      <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+        <li class="dropdown-header text-start">
+          <h6>Filter</h6>
+        </li>
+
+        <li><a class="dropdown-item" href="#">Today</a></li>
+        <li><a class="dropdown-item" href="#">This Month</a></li>
+        <li><a class="dropdown-item" href="#">This Year</a></li>
+      </ul>
+    </div> -->
+
+    <div class="card-body">
+      <h5 class="card-title">Student page</h5>
+
+      <table class="table table-borderless datatable">
+        <thead>
+          <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Name</th>
+            <th scope="col">StudentID</th>
+            <th scope="col">Email</th>
+            <th scope="col">Course Name</th>
+            <th scope="col">Location</th>
+            <th scope="col">ContactNo</th>
+            <th scope="col">Status</th>
+            <th scope="col">Resume</th>
+            <th scope="col">Change Status</th>
+            <th scope="col">Reason Of Rejection</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let student of recruiter_student">
+            <td>{{student.createdDate | date:'dd-MM-yy'}}</td>
+            <td>{{ student.name }}</td>
+            <td>{{ student.studnetID }}</td>
+            <td>{{ student.email }}</td>
+            <td>{{ student.courseName }}</td>
+            <td>{{ student.location }}</td>
+            <td>{{ student.contactNo }}</td>
+            <td>
+              <span *ngIf="student.status === 'Placed'" class="badge bg-success">Placed</span>
+              <span *ngIf="student.status === 'Jobseeker'" class="badge bg-warning">Jobseeker</span>
+            </td>
+            <td>
+              <a *ngIf="student.cvAttachment" (click)="downloadFile(generateDownloadLink(student))" style="cursor: pointer; color: blue;">Download CV</a>
+              <span *ngIf="!student.cvAttachment">N/A</span>
+            </td>
+            <td>
+              <select [(ngModel)]="student.hiredStatus" (change)="updateStudentStatus(student)">
+                <option value="Hired">Hired</option>
+                <option value="Rejected">Rejected</option>
+                <option value="Relevant" selected>Relevant</option>
+              </select>
+            
+            </td>
+            <td *ngIf="student.hiredStatus === 'Rejected'">
+              <ng-container *ngIf="student.rejectionReason[0]">
+                {{ student.rejectionReason[0] }}
+              </ng-container>
+              <textarea *ngIf="!student.rejectionReason[0]"
+                        [(ngModel)]="newRejectionReason"
+                        (blur)="addRejectionReason(student, newRejectionReason)"></textarea>
+            </td>
+            
+            
+            
+           
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  window.location.reload();
+</script>

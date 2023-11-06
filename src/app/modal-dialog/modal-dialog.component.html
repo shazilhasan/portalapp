@@ -1,0 +1,12 @@
+<div class="modal" *ngIf="isVisible">
+  <div class="modal-content">
+    <h3>Select Recruiter</h3>
+    <select [(ngModel)]="selectedRecruiter">
+      <!-- Use the 'companyName' property to display the company names -->
+      <option *ngFor="let recruiter of recruiters" [value]="recruiter._id">{{ recruiter.email }} / {{recruiter.companyName}}</option>
+    </select>
+    <button (click)="onConfirmSelection()">Confirm</button>
+    <button (click)="closeModal.emit()">Cancel</button>
+  </div>
+</div>
+  

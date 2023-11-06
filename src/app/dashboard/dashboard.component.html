@@ -1,0 +1,193 @@
+<div class="pagetitle">
+      <h1>Dashboard</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item active">Dashboard</li>
+        </ol>
+      </nav>
+    </div>
+
+    <section class="section dashboard">
+      <div class="row">
+
+        <!-- Left side columns -->
+        <div class="col-lg-8">
+          <div class="row">
+
+            <!-- Sales Card -->
+            <div class="col-xxl-3 col-md-6">
+              <div class="card info-card sales-card">
+                <div class="card-body">
+                  <h4 class="card-title">Total Student</h4>
+
+                  <div class="d-flex align-items-center">
+                    <!-- <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-cart"></i>
+                    </div> -->
+                    <div class="ps-3">
+                      <h6>{{countplaced + countJonseeker}}</h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div><!-- End Sales Card -->
+
+            <!-- Revenue Card -->
+            <div class="col-xxl-3 col-md-6">
+              <div class="card info-card revenue-card">
+                <div class="card-body">
+                  <h4 class="card-title">Placed Student</h4>
+                  <div class="d-flex align-items-center">
+                    <div class="ps-3">
+                      <h6>{{countplaced}}</h6>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div><!-- End Revenue Card -->
+
+            <!-- Customers Card -->
+            <div class="col-xxl-3 col-xl-12">
+
+              <div class="card info-card customers-card">
+                <div class="card-body">
+                  <h1 class="card-title">Jobseeker Student</h1>
+
+                  <div class="d-flex align-items-center">
+                    <div class="ps-3">
+                      <h6>{{countJonseeker}}</h6>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div><!-- End Customers Card -->
+
+            <!-- Customers Card -->
+            <div class="col-xxl-3 col-xl-12">
+
+              <div class="card info-card customers-card">
+                <div class="card-body">
+                  <h5 class="card-title">Hired Student</h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="ps-3">
+                      <h6>{{countHired}}</h6>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div><!-- End Customers Card -->
+    
+            <!-- Recent Sales -->
+            <div class="col-12">
+              <div class="card recent-sales custom-card">
+                <div class="card-body">
+                  <h5 class="card-title">Placed students</h5>
+
+                  <table class="table table-borderless datatable">
+                    <thead>
+                      <tr>
+                        <th scope="col">Date</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">StudentID</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Course Name</th>
+                        <th scope="col">Location</th>
+                        <th scope="col">ContactNo</th>
+                        <th scope="col">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let student of placedStudents">
+                        <td>{{student.createdDate | date:'dd-MM-yy'}}</td>
+                        <td>{{ student.name }}</td>
+                        <td>{{ student.studnetID }}</td>
+                        <td>{{ student.email }}</td>
+                        <td>{{ student.courseName }}</td>
+                        <td>{{ student.location }}</td>
+                        <td>{{ student.contactNo }}</td>
+                        <td>
+                          <span *ngIf="student.status === 'Placed'" class="badge bg-success">Placed</span>
+                          <span *ngIf="student.status === 'Jobseeker'" class="badge bg-warning">Jobseeker</span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                </div>
+
+              </div>
+            </div><!-- End Recent Sales -->
+
+            <!-- Top Selling -->
+            <div class="col-12">
+              <div class="card recent-sales custom-card">
+                <div class="card-body">
+                  <h5 class="card-title">Jobseeker students</h5>
+                  <button (click)="openModalForProfiles()">Send Profile</button>
+                  <table class="table table-borderless datatable">
+                    <thead>
+                      <tr>
+                        <th scope="col">Date</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">StudentID</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Course Name</th>
+                        <th scope="col">Location</th>
+                        <th scope="col">ContactNo</th>
+                        <th scope="col">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let student of jobSeekerStudents">
+                        <td>{{student.createdDate | date:'dd-MM-yy'}}</td>
+                        <td>{{ student.name }}</td>
+                        <td>{{ student.studnetID }}</td>
+                        <td>{{ student.email }}</td>
+                        <td>{{ student.courseName }}</td>
+                        <td>{{ student.location }}</td>
+                        <td>{{ student.contactNo }}</td>
+                        <td>
+                          <span *ngIf="student.status === 'Placed'" class="badge bg-success">Placed</span>
+                          <span *ngIf="student.status === 'Jobseeker'" class="badge bg-warning">Jobseeker</span>
+                        </td>
+                        <td>
+                          <input
+                            type="checkbox"
+                            [checked]="selectedStudents.includes(student)"
+                            (change)="onStudentSelection(student, $event)"
+                          >
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <app-modal-dialog
+            [isVisible]="isModalVisible"
+            (closeModal)="closeModal()"
+            (confirmSelection)="sendProfileToRecruiter($event)"
+          ></app-modal-dialog>
+    
+            
+                      
+
+          </div>
+        </div><!-- End Left side columns -->
+
+
+      </div>
+    </section>
+
+
+
+<script>
+  window.location.reload();
+</script>

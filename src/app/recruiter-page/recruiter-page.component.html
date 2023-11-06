@@ -1,0 +1,49 @@
+<div class="col-12">
+  <div class="card recent-sales overflow-auto">
+    <div class="card-body">
+      <h5 class="card-title">Recruiter page</h5>
+
+      <table class="table table-borderless datatable">
+        <thead>
+          <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Name</th>
+            <th scope="col">jobID</th>
+            <th scope="col">JobTitle</th>
+            <th scope="col">CompanyName</th>
+            <th scope="col">Email</th>
+            <th scope="col">ContactNumber</th>
+            <th scope="col">Job Description</th>
+            <th scope="col">AnyBond</th>
+            <th scope="col">Salary Package</th>
+            <th scope="col">location</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let recruiter of recruiters">
+            <td>{{recruiter.createdDate | date:'dd-MM-yy'}}</td>
+            <td>{{ recruiter.name }}</td>
+            <td>{{ recruiter.jobID }}</td>
+            <td>{{ recruiter.jobTitle }}</td>
+            <td>{{ recruiter.companyName }}</td>
+            <td>{{ recruiter.email }}</td>
+            <td>{{ recruiter.contactNumber }}</td>
+            <td>
+              {{ recruiter.jobDescription }}
+            </td>
+            <td>{{ recruiter.anyBond }}</td>
+            <td>{{ recruiter.salaryPackage }}</td>
+            <td>{{ recruiter.location }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- <div class="text-center">
+        <button class="btn btn-primary" (click)="prevPage()" [disabled]="page === 1">Previous</button>
+        <span>Page {{ page }}</span>
+        <button class="btn btn-primary" (click)="nextPage()" [disabled]="page * limit >= totalRecruiters">Next</button>
+      </div> -->
+    </div>
+
+  </div>
+</div>
